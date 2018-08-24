@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import controller.RedesController;
 
-public class Main {
+public class Main { 
 
 	public static void main(String[] args) {
 		

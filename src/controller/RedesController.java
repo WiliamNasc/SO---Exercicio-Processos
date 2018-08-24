@@ -9,7 +9,7 @@ public class RedesController {
 		
 		if (nomeSo.equals(Linux)){
 		
-			return nomeSo;
+			return nomeSo; 
 		
 		} else if (nomeSo.equals(Windows)){
 			
