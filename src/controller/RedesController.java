@@ -8,6 +8,10 @@ public class RedesController {
 		String Windows = "Windows 10";
 		
 		if (nomeSo.equals(Linux)){ 
+			
+			/* O comando para linux de configuração
+			 ip é if config; */
+			
 		
 			return nomeSo; 
 		
