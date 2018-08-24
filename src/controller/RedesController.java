@@ -7,7 +7,7 @@ public class RedesController {
 		String Linux = "Linux";
 		String Windows = "Windows 10";
 		
-		if (nomeSo.equals(Linux)){
+		if (nomeSo.equals(Linux)){ 
 		
 			return nomeSo; 
 		

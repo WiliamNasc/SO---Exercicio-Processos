@@ -6,7 +6,7 @@ import controller.RedesController;
 
 public class Main { 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) { 
 		
 		RedesController rdc = new RedesController();
 		String nomeSo = System.getProperty("os.name"); 
