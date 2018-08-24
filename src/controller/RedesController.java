@@ -5,7 +5,7 @@ public class RedesController {
 	public String ip (String nomeSo){
 		
 		String Linux = "Linux";
-		String Windows = "Windows";
+		String Windows = "Windows 10";
 		
 		if (nomeSo.equals(Linux)){
 		
@@ -19,6 +19,6 @@ public class RedesController {
 		
 		
 
-}
+} 
 	
 }

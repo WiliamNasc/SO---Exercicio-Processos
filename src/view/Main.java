@@ -12,7 +12,8 @@ public class Main {
 		String nomeSo = System.getProperty("os.name"); 
 		
 		System.out.println(rdc.ip(nomeSo));
+		
 
-	}
+	} 
 
 }
