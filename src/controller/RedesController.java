@@ -1,28 +1,72 @@
 package controller;
 
-public class RedesController {
-	
-	public String ip (String nomeSo){
-		
-		String Linux = "Linux";
-		String Windows = "Windows 10";
-		
-		if (nomeSo.equals(Linux)){ 
-			
-			/* O comando para linux de configuração
-			 ip é if config; */
-			
-		
-			return nomeSo; 
-		
-		} else if (nomeSo.equals(Windows)){
-			
-			return nomeSo;
-		
-		}else {return "Algo deu errado !";}
-		
-		
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-} 
+import javax.swing.JOptionPane;
+
+public class RedesController {
+
 	
-}
+	public void ip (String nomeSo) throws IOException{ 
+		
+		if (nomeSo.equals("Linux")){
+			
+			try{
+				
+				Process proc = Runtime.getRuntime().exec("ifconfig wlan");
+				InputStream fluxo = proc.getInputStream();
+				InputStreamReader leitor = new InputStreamReader(fluxo);
+				BufferedReader buffer = new BufferedReader(leitor);
+				String linha = buffer.readLine();
+				
+				
+				while(linha != null){
+					
+					System.out.println(linha);
+					linha = buffer.readLine();
+					
+					
+				}
+				
+				
+				
+				} catch (IOException e){
+					
+					String erro = e.getMessage();
+					JOptionPane.showMessageDialog(null, erro, "ERRO" , JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				}
+			
+
+			
+		} else if (nomeSo.equals("Windows 10")){
+			
+			try{
+				
+				Process proc = Runtime.getRuntime().exec("ipconfig");
+				InputStream fluxo = proc.getInputStream();
+				InputStreamReader leitor = new InputStreamReader(fluxo);
+				BufferedReader buffer = new BufferedReader(leitor);
+				String linha = buffer.readLine();
+				
+				while(linha != null){
+					
+					System.out.println(linha);
+					linha = buffer.readLine();
+					
+				}
+				
+				} catch (IOException e){
+					
+					String erro = e.getMessage();
+					JOptionPane.showMessageDialog(null, erro, "ERRO" , JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				}
+			}
+
+		}
+		
+	}
