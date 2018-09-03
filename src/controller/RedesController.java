@@ -13,7 +13,7 @@ public class RedesController {
 	public void ip (String nomeSo) throws IOException{ 
 		
 		
-		if (nomeSo.equals("Linux")){
+		if (nomeSo.contains("Linux")){
 			
 			try{
 				
@@ -56,7 +56,7 @@ public class RedesController {
 			
 
 			
-		} else if (nomeSo.equals("Windows 10")){
+		} else if (nomeSo.contains("Windows")){
 			
 			try{
 				
@@ -65,10 +65,19 @@ public class RedesController {
 				InputStreamReader leitor = new InputStreamReader(fluxo);
 				BufferedReader buffer = new BufferedReader(leitor);
 				String linha = buffer.readLine();
+				String vetor[] = new String[2];
 				
 				while(linha != null){
 					
-					System.out.println(linha);
+					if(linha.contains("Adaptador")){
+						vetor[0] = linha;
+						
+					}
+					else if(linha.contains("IPv4")){
+						vetor[1] = linha;
+						System.out.println(vetor[0] + "\n" + vetor[1]);
+					}
+					
 					linha = buffer.readLine();
 					
 				}
