@@ -68,7 +68,7 @@ public class RedesController {
 			
 		}else if (nomeSo.contains("Windows")){
 			
-			lerIp("ipconfig", "Adaptador", "Ipv4");
+			lerIp("ipconfig", "Adaptador", "IPv4");
 		}
 		
 
@@ -83,12 +83,12 @@ public class RedesController {
 		
 		if (nomeSo.equals("Linux")){
 			
-			lerPing("ping", "www.google.com", "-c" , 10);
+			lerPing("ping www.google.com -c 10");
 			
 			
 		}else if (nomeSo.equals("Windows 10")){
 			
-
+			lerPing("ping -n 10 www.google.com");
 
 		}
 		
@@ -149,14 +149,12 @@ public class RedesController {
 	
 //-------------------------------------------------------------------------------
 
-	public void lerPing (String comando, String endereco
-			,String listar, int qtdPing){
+	public void lerPing (String comando){
 		
 		try{
 			
 			
-			Process proc = Runtime.getRuntime().exec(comando + " " 
-			+ endereco + " " + listar + " " + qtdPing);
+			Process proc = Runtime.getRuntime().exec(comando);
 			InputStream fluxo = proc.getInputStream();
 			InputStreamReader leitor = new InputStreamReader(fluxo);
 			BufferedReader buffer = new BufferedReader(leitor);
