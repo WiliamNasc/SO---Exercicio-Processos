@@ -9,88 +9,73 @@ import javax.swing.JOptionPane;
 
 public class RedesController {
 
+	public void lerIp (String comando, String Adaptador, String Ipv4){
+
+		try{
+			
+			
+			Process proc = Runtime.getRuntime().exec(comando);
+			InputStream fluxo = proc.getInputStream();
+			InputStreamReader leitor = new InputStreamReader(fluxo);
+			BufferedReader buffer = new BufferedReader(leitor);
+			String linha = buffer.readLine();
+			
+			String [] vetor = new String [2];
+			
+			
+			
+			while(linha != null){
+			
+				if (linha.contains(Adaptador)){
+					
+					vetor[0] = linha;
+				
+				}else if (linha.contains(Ipv4)){
+					
+					vetor[1] = linha;
+					
+					System.out.println("Adaptador: " + vetor[0]
+							+ " | Ipv4: " + vetor[1]);
+					
+				}
+				
+				linha = buffer.readLine();
+
+			}
+
+		
+		} 
+			 catch (IOException e){
+				
+				String erro = e.getMessage();
+				JOptionPane.showMessageDialog(null,erro,
+						"ERRO" , JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+
+		
+	}
+
+//--------------------------------------------------------------------------------
+	
 	
 	public void ip (String nomeSo) throws IOException{ 
 		
-		
 		if (nomeSo.contains("Linux")){
 			
-			try{
-				
-				
-				Process proc = Runtime.getRuntime().exec("ifconfig eth0");
-				InputStream fluxo = proc.getInputStream();
-				InputStreamReader leitor = new InputStreamReader(fluxo);
-				BufferedReader buffer = new BufferedReader(leitor);
-				String linha = buffer.readLine();
-				
-				String [] vetor = new String [linha.length()];
-				int i = 0;
-				
-				while(linha != null){
-				
-					i++;
-					System.out.println(linha);
-					linha = buffer.readLine();
-					
-					vetor[i] = linha;
-
-					}
-				/*
-				for (i = 0; i < vetor.length; i++){
-					
-					if (vetor[i] ==  null){
-					
-					vetor[i] = "";
-					
-					} else {System.out.println(vetor[i]);}
-				}*/
+			lerIp("ifconfig", "ether", "inet");
 			
-			} 
-				 catch (IOException e){
-					
-					String erro = e.getMessage();
-					JOptionPane.showMessageDialog(null, erro, "ERRO" , JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-				}
 			
-
+		}else if (nomeSo.contains("Windows")){
 			
-		} else if (nomeSo.contains("Windows")){
-			
-			try{
-				
-				Process proc = Runtime.getRuntime().exec("ipconfig");
-				InputStream fluxo = proc.getInputStream();
-				InputStreamReader leitor = new InputStreamReader(fluxo);
-				BufferedReader buffer = new BufferedReader(leitor);
-				String linha = buffer.readLine();
-				String vetor[] = new String[2];
-				
-				while(linha != null){
-					
-					if(linha.contains("Adaptador")){
-						vetor[0] = linha;
-						
-					}
-					else if(linha.contains("IPv4")){
-						vetor[1] = linha;
-						System.out.println(vetor[0] + "\n" + vetor[1]);
-					}
-					
-					linha = buffer.readLine();
-					
-				}
-				
-				} catch (IOException e){
-					
-					String erro = e.getMessage();
-					JOptionPane.showMessageDialog(null, erro, "ERRO" , JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-				}
-			}
-
+			lerIp("ipconfig", "Adaptador", "Ipv4");
 		}
+		
+
+		
+	}
+	
+//--------------------------------------------------------------------------------
 	
 	
 	public void ping (String nomeSo) throws IOException{ 
@@ -98,67 +83,110 @@ public class RedesController {
 		
 		if (nomeSo.equals("Linux")){
 			
-			try{
-				
-				
-				Process proc = Runtime.getRuntime().exec("ping www.google.com");
-				InputStream fluxo = proc.getInputStream();
-				InputStreamReader leitor = new InputStreamReader(fluxo);
-				BufferedReader buffer = new BufferedReader(leitor);
-				String linha = buffer.readLine();
-				
-				
-				
-				while(linha != null){
-				
-					
-					System.out.println(linha);
-					linha = buffer.readLine();
-					
-					
-
-					}
-				
+			lerPing("ping", "www.google.com", "-c" , 10);
 			
-				
-				
 			
-			} 
-				 catch (IOException e){
-					
-					String erro = e.getMessage();
-					JOptionPane.showMessageDialog(null, erro, "ERRO" , JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-				}
+		}else if (nomeSo.equals("Windows 10")){
 			
 
-			
-		} else if (nomeSo.equals("Windows 10")){
-			
-			try{
-				
-				Process proc = Runtime.getRuntime().exec("ping www.google.com");
-				InputStream fluxo = proc.getInputStream();
-				InputStreamReader leitor = new InputStreamReader(fluxo);
-				BufferedReader buffer = new BufferedReader(leitor);
-				String linha = buffer.readLine();
-				
-				while(linha != null){
-					
-					System.out.println(linha);
-					linha = buffer.readLine();
-					
-				}
-				
-				} catch (IOException e){
-					
-					String erro = e.getMessage();
-					JOptionPane.showMessageDialog(null, erro, "ERRO" , JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-				}
-			}
 
 		}
-
 		
 	}
+//-------------------------------------------------------------------------------- 
+	
+	public void menuProcessos(String nomeSo) throws IOException{
+		
+		int opcao = 0;
+		
+		do{
+		
+			opcao = Integer.parseInt(
+					JOptionPane.showInputDialog("MENU PROCESSOS \n\n"
+							+ "1 - EXEC.: config. ip \n\n"
+							+ "2 - EXEC.: config. ping \n\n"
+							+ "9 - ENCERRAR \n\n"));
+			
+		avaliaOp(opcao, nomeSo);
+			
+			
+		}while(opcao != 9);
+		
+		
+
+	}
+	
+//-------------------------------------------------------------------------------
+	
+	public int avaliaOp(int opcao, String nomeSo) throws IOException{
+		
+		switch (opcao){
+		
+		case 1:
+			
+			ip(nomeSo);
+			
+			break;
+			
+		case 2:
+			
+			ping(nomeSo);
+			
+			break;
+			
+		case 9:
+			
+			break;
+			
+			default:
+				
+				System.out.println("Opcao invalida !");
+		
+		}
+		
+		return opcao;
+	}
+	
+//-------------------------------------------------------------------------------
+
+	public void lerPing (String comando, String endereco
+			,String listar, int qtdPing){
+		
+		try{
+			
+			
+			Process proc = Runtime.getRuntime().exec(comando + " " 
+			+ endereco + " " + listar + " " + qtdPing);
+			InputStream fluxo = proc.getInputStream();
+			InputStreamReader leitor = new InputStreamReader(fluxo);
+			BufferedReader buffer = new BufferedReader(leitor);
+			String linha = buffer.readLine();
+			
+			
+			
+			while(linha != null){
+			
+				System.out.println(linha);
+				linha = buffer.readLine();
+
+			}
+
+		
+		} 
+			 catch (IOException e){
+				
+				String erro = e.getMessage();
+				JOptionPane.showMessageDialog(null,erro,
+						"ERRO" , JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+
+
+	}
+	
+//-------------------------------------------------------------------------------
+	
+	
+}
+
+
