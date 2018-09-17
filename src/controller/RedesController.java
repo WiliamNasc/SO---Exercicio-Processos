@@ -12,7 +12,7 @@ public class RedesController {
 	public void lerIp (String comando, String Adaptador, String Ipv4){
 
 		try{
-			
+			 
 			
 			Process proc = Runtime.getRuntime().exec(comando);
 			InputStream fluxo = proc.getInputStream();
